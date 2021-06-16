@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Virtually-Room</title>
+    <meta name="description" content="">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <script src="https://kit.fontawesome.com/6510466b6c.js" crossorigin="anonymous"></script>
+    <script>
+        const params = new URLSearchParams(location.search);
+        if (!params.get("room")) location.href = "/";
+    </script>
+    <!-- //BOOTSTRAP
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+</head>
+
+<body>
+    <div class="entry" id="entry">
+        <div class="box">
+            <div class="head-name">Enter a Name</div>
+            <input type="text" class="name-field" autofocus="autofocus" placeholder="Enter Name.." id="name-field"></input><br>
+            <button class="continue-name">Continue</button>
+
+        </div>
+    </div>
+    <div class="container-room">
+        <div class="left-cont">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="copycode-cont">
+                        <div class="roomcode"></div>
+                        <button class="copycode-button" onclick="CopyClassText()">Copy Code</button>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="head-title">
+                        <div class="chats button" ><i class="fas fa-comment-alt mr-1"></i>Chats</div>
+                        <div class="attendies button" ><i class="fas fa-users mr-1"></i>Attendies</div>
+                    </div>
+                </div>
+            </div>
+            <div class="video-cont-single" id="vcont">
+                <div class="video-box">
+                    <video class="video-frame" id="vd1" autoplay playsinline>
+                    </video>
+                    <div class="nametag" id="myname">yourname</div>
+                    <div class="mute-icon" id="mymuteicon"><i class="fas fa-microphone-slash"></i></div>
+                    <div class="video-off" id="myvideooff">Video Off</div>
+                </div>
+            </div>
+            <div class="footer row" id="footer" style="position:relative; text-align: center;">
+                <div class="utils flex"> 
+
+                    <div class="audio tooltip  col-sm-6">
+                        <i class="fas fa-microphone"></i>
+                        <span class="tooltiptext">mute/unmute</span>
+                    </div>
+                    <div class="novideo tooltip  col-sm-6">
+                        <i class="fas fa-video"></i>
+                        <span class="tooltiptext">video on/off</span>
+                    </div>
+                    <div class="screenshare tooltip  col-sm-6">
+                        <i class="fas fa-desktop"></i>
+                        <span class="tooltiptext">Share Screen</span>
+                    </div>
+                    <div class="chat tooltip chatsym button  col-sm-6">
+                        <i class="fas fa-comments"></i>
+                        <span class="tooltiptext">Chat</span>
+                    </div>
+                    <div class="board-icon tooltip  col-sm-6">
+                        <i class="fas fa-chalkboard"></i>
+                        <span class="tooltiptext">Whiteboard</span>
+                    </div>
+                    <div class="cutcall tooltip  col-sm-6">
+                        <i class="fas fa-phone-slash"></i>
+                        <span class="tooltiptext">Leave Call</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        
+        <div class="right-cont">
+            <div class="row">
+            <div class="column col-chat">
+                <div id="attendiess" class="collapsile">  
+                    <div class="attendies-cont">
+
+                    </div>
+                </div>
+                <div class="chatt">  
+                    <div class="chat-cont">
+
+                    </div>
+                    <div class="chat-input-cont">
+                    <div class="ci-cont"><input type="text" class="chat-input" autofocus="autofocus" placeholder="Type chat here.."></div>
+                    <div class="ci-send  tooltip" style="width: auto;">
+                        <button class="chat-send"><i class="fas fa-paper-plane tooltip" style="color: #505AC9;font-size: 20px;"></i></button>
+                        <span class="tooltiptext">send</span>
+                    </div>
+                    <div class=" tooltip" style="width: auto;">
+                        <button class="clear-chat" onclick=clearchat()><i class="fas fa-trash-alt" style="color: #505AC9;font-size: 20px;"></i></button>
+                        <span class="tooltiptext">clearchat</span>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+</body>
+
+</html>
