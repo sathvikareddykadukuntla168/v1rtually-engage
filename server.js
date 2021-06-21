@@ -44,6 +44,55 @@ io.on('connect', socket => {
         io.to(roomid).emit('user count', rooms[roomid].length);
 
     });
+    
+    socket.on('action', msg => {
+        if (msg == 'mute')
+            micSocket[socket.id] = 'off';
+        else if (msg == 'unmute')
+            micSocket[socket.id] = 'on';
+        else if (msg == 'videoon')
+            videoSocket[socket.id] = 'on';
+        else if (msg == 'videooff')
+            videoSocket[socket.id] = 'off';
+
+        socket.to(socketroom[socket.id]).emit('action', msg, socket.id);
+    })
+
+    socket.on('video-offer', (offer, sid) => {
+        socket.to(sid).emit('video-offer', offer, socket.id, socketname[socket.id], micSocket[socket.id], videoSocket[socket.id]);
+    })
+
+    socket.on('video-answer', (answer, sid) => {
+        socket.to(sid).emit('video-answer', answer, socket.id);
+    })
+
+    socket.on('new icecandidate', (candidate, sid) => {
+        socket.to(sid).emit('new icecandidate', candidate, socket.id);
+    })
+
+    socket.on('message', (msg, username, roomid) => {
+        io.to(roomid).emit('message', msg, username, moment().format(
+            "h:mm a"
+        ));
+    })
+
+    socket.on('attendies',(roomid)=>{
+
+        var attendiesofRoom = new String("");
+        let attendieslist=[];
+        //  console.log(roomid);
+        //  console.log(socketroom);
+        //  console.log(socketname);
+        //  console.log(rooms);
+        //  console.log(rooms[roomid]);
+         let socketidsofroom=rooms[roomid];
+         for(var socketid in socketidsofroom){
+            attendieslist.push(socketname[socketidsofroom[socketid]]);
+            attendiesofRoom+=socketname[socketidsofroom[socketid]]+"\n";
+         }
+         io.to(roomid).emit('attendies',attendieslist);
+    });
+
     socket.on('disconnect', () => {
         if (!socketroom[socket.id]) return;
         socket.to(socketroom[socket.id]).emit('message', `${socketname[socket.id]} left the chat.`, `Bot`, moment().format(
