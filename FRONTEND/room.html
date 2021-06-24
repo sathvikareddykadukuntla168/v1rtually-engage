@@ -42,6 +42,10 @@
                         <div class="attendies button" ><i class="fas fa-users mr-1"></i>Attendies</div>
                     </div>
                 </div>
+                <!-- <button class="game">DrawBattle</button>
+                <div class="drawbattle-game">
+                    <iframe  src="https://drawbattle.io/" title="v1rtually-DrawBattle" height="1000" width="1000"></iframe> 
+                </div> -->
             </div>
             <div class="video-cont-single" id="vcont">
                 <div class="video-box">
@@ -50,6 +54,22 @@
                     <div class="nametag" id="myname">yourname</div>
                     <div class="mute-icon" id="mymuteicon"><i class="fas fa-microphone-slash"></i></div>
                     <div class="video-off" id="myvideooff">Video Off</div>
+                </div>
+            </div>
+            <div class="whiteboard-cont"><canvas id="whiteboard" height="1000" width="1000"></canvas>
+                <div class="colors-cont">
+                    <div class="black" onclick="setColor('black')"></div>
+                    <div class="red" onclick="setColor('#e74c3c')"></div>
+                    <div class="brown" onclick="setColor('#834c32')"></div>
+                    <div class="blue" onclick="setColor('#3498db')"></div>
+                    <div class="pink" onclick="setColor('#fd79a8')"></div>
+                    <div class="purple" onclick="setColor('#9b59b6')"></div>
+                    <div class="grey" onclick="setColor('gray')"></div>
+                    <div class="yellow" onclick="setColor('#f1c40f')"></div>
+                    <div class="green" onclick="setColor('#badc58')"></div>
+                    <div class="orange" onclick="setColor('#e67e22')"></div>
+                    <div class="eraser" onclick="setEraser()"><i class="fas fa-eraser"></i></div>
+                    <div class="clearboard" onclick="clearBoard()"><i class="fas fa-trash-alt"></i></div>
                 </div>
             </div>
             <div class="footer row" id="footer" style="position:relative; text-align: center;">
@@ -116,9 +136,8 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="JavaScripts/Room.js"></script>
+    <script src="JavaScripts/WhiteBoard.js"></script>
     <script src="JavaScripts/Chat.js"></script>
-
-
 </body>
 
 </html>

@@ -44,7 +44,7 @@ io.on('connect', socket => {
         io.to(roomid).emit('user count', rooms[roomid].length);
 
     });
-    
+
     socket.on('action', msg => {
         if (msg == 'mute')
             micSocket[socket.id] = 'off';
@@ -91,6 +91,23 @@ io.on('connect', socket => {
             attendiesofRoom+=socketname[socketidsofroom[socketid]]+"\n";
          }
          io.to(roomid).emit('attendies',attendieslist);
+    });
+
+    socket.on('getCanvas', () => {
+        if (roomBoard[socketroom[socket.id]])
+            socket.emit('getCanvas', roomBoard[socketroom[socket.id]]);
+    });
+
+    socket.on('draw', (newx, newy, prevx, prevy, color, size) => {
+        socket.to(socketroom[socket.id]).emit('draw', newx, newy, prevx, prevy, color, size);
+    })
+
+    socket.on('clearBoard', () => {
+        socket.to(socketroom[socket.id]).emit('clearBoard');
+    });
+
+    socket.on('store canvas', url => {
+        roomBoard[socketroom[socket.id]] = url;
     });
 
     socket.on('disconnect', () => {
