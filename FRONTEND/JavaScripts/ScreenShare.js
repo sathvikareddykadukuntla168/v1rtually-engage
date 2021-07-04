@@ -128,12 +128,12 @@ function refreshMyLocalStream(stream, localAudioTrackChange = false) {
         userLog("error", "Unable to share the screen " + err);
       });
   }
- 
+  
   /**
    * Set Screen Sharing Status
    * @param {*} status
    */
-   function setScreenSharingStatus(status) {
+  function setScreenSharingStatus(status) {
     screenShareBtn.className = status ? "fas fa-stop-circle" : "fas fa-desktop";
     // only for desktop
     if (!isMobileDevice) {

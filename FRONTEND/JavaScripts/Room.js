@@ -513,3 +513,19 @@ socket.on('action', (msg, sid) => {
 cutCall.addEventListener('click', () => {
     location.href = '/';
 })
+
+
+
+// let gameVisible = false;
+// let drawbattle=document.querySelector('.drawbattle-game');
+// const gameButt = document.querySelector('.game');
+// gameButt.addEventListener('click', () => {
+//     if (gameVisible) {
+//         drawbattle.style.visibility = 'hidden';
+//         gameVisible = false;
+//     }
+//     else {
+//         drawbattle.style.visibility = 'visible';
+//         gameVisible = true;
+//     }
+// })
