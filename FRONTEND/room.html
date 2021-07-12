@@ -11,6 +11,8 @@
     <script>
         const params = new URLSearchParams(location.search);
         if (!params.get("room")) location.href = "/";
+        console.log(params.get("room"));
+        // if(!params.get("prof"))location.href="/";
     </script>
     <!-- //BOOTSTRAP
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -27,26 +29,27 @@
 
         </div>
     </div>
+    <div class="draw-battle">
+        <div>
+            <button class="back-draw-battle"><i class="fa fa-arrow-left" aria-hidden="true"></i>back</button>
+        </div>
+        <div>
+            <iframe  src="https://drawbattle.io/" target="_blank" id="game-id" title="v1rtually-DrawBattle" style="width: 95vw; height: 95vh;"></iframe> 
+        </div>
+    </div>
+   
     <div class="container-room">
         <div class="left-cont">
-            <div class="row">
-                <div class="col-sm-2">
-                    <div class="copycode-cont">
+            <div class="flex-container">
+                    <div class="flex-child">
+                        <div class="copycode-cont">
                         <div class="roomcode"></div>
                         <button class="copycode-button" onclick="CopyClassText()">Copy Code</button>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="head-title">
-                        <div class="chats button" ><i class="fas fa-comment-alt mr-1"></i>Chats</div>
-                        <div class="attendies button" ><i class="fas fa-users mr-1"></i>Attendies</div>
-                    </div>
-                </div>
-                <!-- <button class="game">DrawBattle</button>
-                <div class="drawbattle-game">
-                    <iframe  src="https://drawbattle.io/" title="v1rtually-DrawBattle" height="1000" width="1000"></iframe> 
-                </div> -->
+                    </div></div>
+                    <div class="flex-child"><button class="game"><i class="fas fa-puzzle-piece"></i>Game Zone</button></div>
+                    <div class="flex-child"><button class="music"><i class="fas fa-music"></i>  music</button></div>
             </div>
+            
             <div class="video-cont-single" id="vcont">
                 <div class="video-box">
                     <video class="video-frame" id="vd1" autoplay playsinline>
@@ -72,7 +75,12 @@
                     <div class="clearboard" onclick="clearBoard()"><i class="fas fa-trash-alt"></i></div>
                 </div>
             </div>
-            <div class="footer row" id="footer" style="position:relative; text-align: center;">
+            <div class="music-list">
+                <div>
+                    <iframe src="https://open.spotify.com/embed/playlist/4dNh5KrYQ38RrsdvC7O3wY" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>                </div>
+            </div>
+        <div class="resize">
+            <div class="footer row" id="footer" style="position:fixed; text-align: center;">
                 <div class="utils flex"> 
 
                     <div class="audio tooltip  col-sm-6">
@@ -83,9 +91,9 @@
                         <i class="fas fa-video"></i>
                         <span class="tooltiptext">video on/off</span>
                     </div>
-                    <div class="screenshare tooltip  col-sm-6">
-                        <i class="fas fa-desktop"></i>
-                        <span class="tooltiptext">Share Screen</span>
+                    <div class="attendies tooltip  col-sm-6">
+                        <i class="fas fa-users"></i>
+                        <span class="tooltiptext">Attendies</span>
                     </div>
                     <div class="chat tooltip chatsym button  col-sm-6">
                         <i class="fas fa-comments"></i>
@@ -102,6 +110,7 @@
 
                 </div>
             </div>
+        </div>
 
 
         </div>

@@ -37,6 +37,7 @@ let audioTrackSent = {};
 let videoTrackSent = {};
 // let roompeers = {};
 
+
 let mystream, myscreenshare;
 
 let peerConnection;
@@ -247,7 +248,7 @@ function handleVideoOffer(offer, sid, cname, micinf, vidinf) {
                 else {
                     videoTrackSent[sid] = track;
                     if (!videoAllowed)
-                        videoTrackSent[sid].enabled = false
+                        videoTrackSent[sid].enabled = false;
                 }
             })
 
@@ -421,6 +422,8 @@ videoButt.addEventListener('click', () => {
             })
         }
 
+        navigator.mediaDevices.getUserMedia("video").enabled=false;
+
         myvideooff.style.visibility = 'visible';
 
         socket.emit('action', 'videooff');
@@ -438,8 +441,6 @@ videoButt.addEventListener('click', () => {
                     track.enabled = true;
             })
         }
-
-
         myvideooff.style.visibility = 'hidden';
 
         socket.emit('action', 'videoon');

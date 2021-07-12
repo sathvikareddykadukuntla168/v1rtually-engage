@@ -4,9 +4,13 @@ const roomCodeCont = document.querySelector('#roomcode');
 const joinRoomButton = document.querySelector('#joinroom');
 const mic = document.querySelector('#mic');
 const cam = document.querySelector('#webcam');
+const profbtn= document.querySelector('.prof');
+// const proffbtn= document.querySelector('#professionalbtn');
+// console.log(proffbtn.style.display);
 
 let micAllowed = 1;
 let camAllowed = 1;
+let professional=false;
 
 let mediaConstraints = { video: true, audio: true };
 
@@ -15,6 +19,21 @@ navigator.mediaDevices.getUserMedia(mediaConstraints)
         videoCont.srcObject = localstream;
 })
 
+profbtn.addEventListener('click',()=>{
+    console.log("Professional button clicked");
+    professional=!professional;
+})
+// $("#professionalbtn").on('change', function() {
+//     console.log("Professional button clicked");
+//     if ($(this).is(':checked')) {
+//         professional = $(this).is(':checked');
+//         alert(professional);// To verify
+//     }
+//     else {
+//        professional = $(this).is(':checked');
+//        alert(professional);// To verify
+//     }
+// })
     
 joinRoomButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -23,13 +42,13 @@ joinRoomButton.addEventListener('click', (e) => {
         return;
     }
     const code = roomCodeCont.value;
-    location.href = `/room.html?room=${code}`;
+    location.href = `/room.html?room`+code+`&prof=`+professional;
 })
 
 const createroomtext = 'Creating Room...';
 
 function uuidv4() {
-    return 'xxyxyxxyx'.replace(/[xy]/g, function (c) {
+    return 'xxyxyx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
@@ -49,7 +68,7 @@ createRoomButton.addEventListener('click', (e) => {
             createRoomButton.innerHTML = createroomtext.substring(0, createRoomButton.innerHTML.length - 3);
         }
     }, 500);
-    location.href = `/room.html?room=${uuidv4()}`;
+    location.href = `/room.html?room=${uuidv4()}&prof=${professional}`;
 });
 
 roomCodeCont.addEventListener('change', (e) => {

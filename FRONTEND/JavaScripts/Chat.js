@@ -3,19 +3,43 @@ const chatfull = document.querySelector('.chatt');
 const attendiesRoom = document.querySelector('.attendies-cont')
 const sendButton = document.querySelector('.chat-send');
 const messageField = document.querySelector('.chat-input');
-const chatButton = document.querySelector('.chat');
 const clearButton = document.querySelector('.clear-chat');
-const chatsButton = document.querySelector('.chats');
+const chatButton = document.querySelector('.chat');
 const attendiesButton = document.querySelector('.attendies');
 const leftcont = document.querySelector('left-cont');
+const gamebutton = document.querySelector('.game');
+const bodycont = document.querySelector('.container-room');
+const backbtngame = document.querySelector('.back-draw-battle');
+const game = document.querySelector('.draw-battle');
+const music = document.querySelector('.music-list');
+const musicbutton = document.querySelector('.music');
+const backmusic = document.querySelector('.back-music');
 
 let chatvisible=false;
 let attendiesvisible=false;
+let gamevisible=false;
+let musicon=false;
+const professional = params.get("prof");
+console.log(`isprof `+ professional);
+
 attendiesRoom.style.display="none";
 chatfull.style.display="none";
-// if(!chatvisible && !attendiesvisible){
-//     leftcont.style.width=100%;
-// }
+document.querySelector('.right-cont').style.display="none";
+document.querySelector('.left-cont').style.width="100%";
+game.style.display="none";
+music.style.display="none";
+ 
+
+if(professional=="true"){
+    console.log("i am turning off music and games");
+    gamebutton.style.display="none";
+    musicbutton.style.display="none";
+}
+else{
+    gamebutton.style.display="block";
+    musicbutton.style.display="block";
+}
+
 sendButton.addEventListener('click', () => {
     const msg = messageField.value;
     if(msg!=""){
@@ -54,6 +78,20 @@ socket.on('attendies',(attendieslist)=>{
     } 
 });
 
+
+gamebutton.addEventListener('click',()=>{
+        game.style.display="block";
+        bodycont.style.display="none";
+});
+backbtngame.addEventListener('click', () => {
+        game.style.display="none";
+        bodycont.style.display="block";
+})
+musicbutton.addEventListener('click',()=>{
+    if(musicon){music.style.display="none";musicon=false;}
+    else{music.style.display="block";musicon=true;}
+});
+
 attendiesButton.addEventListener('click', () => {
     console.log("attendies btn clicked");
     attendiesRoom.style.display="block";
@@ -63,18 +101,25 @@ attendiesButton.addEventListener('click', () => {
         chatvisible=false;
         attendiesRoom.style.display="none";
         chatfull.style.display="none";
+        document.querySelector('.right-cont').style.display="none";
+        document.querySelector('.left-cont').style.width="100%";
     }
     else if(chatvisible){
         attendiesvisible=true;
         chatvisible=false;
         attendiesRoom.style.display="block";
         chatfull.style.display="none";
+        document.querySelector('.right-cont').style.display="block";
+        document.querySelector('.left-cont').style.width="70%";
     }
     else{
         attendiesvisible=true;
         attendiesRoom.style.display="block";
+        document.querySelector('.right-cont').style.display="block";
+        document.querySelector('.left-cont').style.width="70%";
     }
     socket.emit("attendies", roomid);
+    
 });
 
 chatButton.addEventListener('click', () => {
@@ -84,33 +129,20 @@ chatButton.addEventListener('click', () => {
         chatvisible=true;
         attendiesRoom.style.display="none";
         chatfull.style.display="block";
+        document.querySelector('.right-cont').style.display="block";
+        document.querySelector('.left-cont').style.width="70%";
     }
     else if(chatvisible){
         chatvisible=false;
         chatfull.style.display="none";
+        document.querySelector('.right-cont').style.display="none";
+        document.querySelector('.left-cont').style.width="100%";
     }
     else{
         chatvisible=true;
         chatfull.style.display="block";
-    }
-
-})
-
-chatsButton.addEventListener('click', () => {
-    console.log("chat btn clicked");
-    if(attendiesvisible){
-        attendiesvisible=false;
-        chatvisible=true;
-        attendiesRoom.style.display="none";
-        chatfull.style.display="block";
-    }
-    else if(chatvisible){
-        chatvisible=false;
-        chatfull.style.display="none";
-    }
-    else{
-        chatvisible=true;
-        chatfull.style.display="block";
+        document.querySelector('.right-cont').style.display="block";
+        document.querySelector('.left-cont').style.width="70%";
     }
 })
 

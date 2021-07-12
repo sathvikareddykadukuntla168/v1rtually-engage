@@ -4,6 +4,13 @@ const http = require('http')
 const moment = require('moment');
 const socketio = require('socket.io');
 const PORT = process.env.PORT || 3000;
+// const admin = require('firebase-admin');
+
+// const serviceAccount  = require('./serviceAccountKey.json');
+
+// admin.initializeApp({
+//     credential : admin.credential.cert(serviceAccount),
+// });
 
 const app = express();
 const server = http.createServer(app);
@@ -46,14 +53,18 @@ io.on('connect', socket => {
     });
 
     socket.on('action', msg => {
-        if (msg == 'mute')
+        if (msg == 'mute'){
             micSocket[socket.id] = 'off';
-        else if (msg == 'unmute')
+        }
+        else if (msg == 'unmute'){
             micSocket[socket.id] = 'on';
-        else if (msg == 'videoon')
+        }
+        else if (msg == 'videoon'){
             videoSocket[socket.id] = 'on';
-        else if (msg == 'videooff')
+        }
+        else if (msg == 'videooff'){
             videoSocket[socket.id] = 'off';
+        }
 
         socket.to(socketroom[socket.id]).emit('action', msg, socket.id);
     })
