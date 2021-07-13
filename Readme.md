@@ -3,27 +3,27 @@
 A free browser-based video chat Application made using WebRTC and socket.io
 ##Features
 - Chat
---  decomposible chat
---  clear chat option
- --  notification when person joins or leaves room
+ - decomposible chat
+ -  clear chat option
+  -  notification when person joins or leaves room
 - Attendees
-	-- total number of attendees
-	-- attendees list
+	 - total number of attendees
+	 - attendees list
 - White Board
-	-- Various colors
-	-- erase option
-	-- clear board / new board option
+	 - Various colors
+	 - erase option
+	 - clear board / new board option
 - Professional Use Option
-	-- option to not keep games or fun elements
+	 - option to not keep games or fun elements
 - Games
-	-- [drawbattle](https://drawbattle.io/) game option given to play while in a call
+	 - [drawbattle](https://drawbattle.io/) game option given to play while in a call
 - Music
- -- option to listen to music 
- -- can use your playlist
+  - option to listen to music 
+  - can use your playlist
 - Rooms - code copy
-	-- can copy room code and share 
+	 - can copy room code and share 
 - Unlimited time for a call
-	-- better bandwidth recommended
+	 - better bandwidth recommended
 - No restrictions 
 
 ## Quick start
@@ -61,4 +61,3 @@ You can use a service like [ngrok](https://ngrok.com/) or deploy it on:
  - Feel Free to make a PR
 
 <p align="center"> Made with ❤️ by <a href="https://www.linkedin.com/in/kadukuntla-sathvika-reddy-1662b81a2/">Kadukuntla Sathvika Reddy</a></p>
-{"mode":"full","isActive":false}
