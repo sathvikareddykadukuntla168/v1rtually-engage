@@ -3,9 +3,9 @@
 A free browser-based video chat Application made using WebRTC and socket.io
 ##Features
 - Chat
- - decomposible chat
- -  clear chat option
-  -  notification when person joins or leaves room
+     - decomposible chat
+     -  clear chat option
+     -  notification when person joins or leaves room
 - Attendees
 	 - total number of attendees
 	 - attendees list
