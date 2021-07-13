@@ -1,7 +1,9 @@
 # VIRTUALLY
 
 A free browser-based video chat Application made using WebRTC and socket.io
-##Features
+
+## Features
+
 - Chat
      - decomposible chat
      -  clear chat option
