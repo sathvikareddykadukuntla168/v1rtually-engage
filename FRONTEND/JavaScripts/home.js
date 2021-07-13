@@ -5,8 +5,6 @@ const joinRoomButton = document.querySelector('#joinroom');
 const mic = document.querySelector('#mic');
 const cam = document.querySelector('#webcam');
 const profbtn= document.querySelector('.prof');
-// const proffbtn= document.querySelector('#professionalbtn');
-// console.log(proffbtn.style.display);
 
 let micAllowed = 1;
 let camAllowed = 1;
@@ -19,22 +17,15 @@ navigator.mediaDevices.getUserMedia(mediaConstraints)
         videoCont.srcObject = localstream;
 })
 
+/* Professional needed or not */
+
 profbtn.addEventListener('click',()=>{
-    console.log("Professional button clicked");
+   // console.log("Professional button clicked");
     professional=!professional;
 })
-// $("#professionalbtn").on('change', function() {
-//     console.log("Professional button clicked");
-//     if ($(this).is(':checked')) {
-//         professional = $(this).is(':checked');
-//         alert(professional);// To verify
-//     }
-//     else {
-//        professional = $(this).is(':checked');
-//        alert(professional);// To verify
-//     }
-// })
-    
+
+/*  serve join room request from first end through room id*/
+
 joinRoomButton.addEventListener('click', (e) => {
     e.preventDefault();
     if (roomCodeCont.value.trim() == "") {
@@ -47,6 +38,7 @@ joinRoomButton.addEventListener('click', (e) => {
 
 const createroomtext = 'Creating Room...';
 
+/* CREATE UNIQUE ROOMID */
 function uuidv4() {
     return 'xxyxyx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -54,6 +46,7 @@ function uuidv4() {
     });
 }
 
+/* Create room button request */
 createRoomButton.addEventListener('click', (e) => {
     e.preventDefault();
     createRoomButton.disabled = true;
@@ -71,6 +64,7 @@ createRoomButton.addEventListener('click', (e) => {
     location.href = `/room.html?room=${uuidv4()}&prof=${professional}`;
 });
 
+/* change room id already one is created on name of it */
 roomCodeCont.addEventListener('change', (e) => {
     e.preventDefault();
     if (roomCodeCont.value.trim() !== "") {
@@ -79,6 +73,7 @@ roomCodeCont.addEventListener('change', (e) => {
     }
 })
 
+/* MEDIA MANAGING - VIDEO  AUDIO */
 cam.addEventListener('click', () => {
     if (camAllowed) {
         mediaConstraints = { video: false, audio: micAllowed ? true : false };

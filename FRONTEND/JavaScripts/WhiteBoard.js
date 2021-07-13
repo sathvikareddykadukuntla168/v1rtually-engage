@@ -14,6 +14,7 @@ let colorRemote = "black";
 let drawsize = 3;
 let drawsizeRemote = 3;
 
+/* to toggle whote board on or off */
 whiteboardButton.addEventListener('click', () => {
     if (boardvisible) {
         whiteboardCont.style.visibility = 'hidden';
@@ -25,6 +26,7 @@ whiteboardButton.addEventListener('click', () => {
     }
 })
 
+/* to avoid abrupt canvas set dimensions crctly */
 function fitToContainer(canvas) {
     canvas.style.width = '100%';
     canvas.style.height = '100%';
@@ -34,7 +36,7 @@ function fitToContainer(canvas) {
 
 fitToContainer(canvas);
 
-//getCanvas call is under join room call
+/* getCanvas call is under join room call */
 socket.on('getCanvas', url => {
     let img = new Image();
     img.onload = start;
@@ -43,28 +45,29 @@ socket.on('getCanvas', url => {
     function start() {
         content.drawImage(img, 0, 0);
     }
-    console.log('got canvas', url)
+    //console.log('got canvas', url)
 })
 
+/* for erase function */
 function setEraser() {
     color = "white";
     drawsize = 10;
 }
 
-
+/* to set new color */
 function setColor(newcolor) {
     color = newcolor;
     drawsize = 3;
 }
 
-//To adjust 
+/* To adjust */
 function reportWindowSize() {
     fitToContainer(canvas);
 }
 
 window.onresize = reportWindowSize;
-//
 
+/* to clear board */
 function clearBoard() {
     if (window.confirm('Are you sure you want to clear board? This cannot be undone')) {
         content.clearRect(0, 0, canvas.width, canvas.height);

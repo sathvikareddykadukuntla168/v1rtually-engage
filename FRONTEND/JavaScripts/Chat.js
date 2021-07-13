@@ -19,8 +19,9 @@ let chatvisible=false;
 let attendiesvisible=false;
 let gamevisible=false;
 let musicon=false;
+
 const professional = params.get("prof");
-console.log(`isprof `+ professional);
+//console.log(`isprof `+ professional);
 
 attendiesRoom.style.display="none";
 chatfull.style.display="none";
@@ -31,7 +32,7 @@ music.style.display="none";
  
 
 if(professional=="true"){
-    console.log("i am turning off music and games");
+    //console.log("i am turning off music and games");
     gamebutton.style.display="none";
     musicbutton.style.display="none";
 }
@@ -40,6 +41,8 @@ else{
     musicbutton.style.display="block";
 }
 
+
+/* Chat send button */
 sendButton.addEventListener('click', () => {
     const msg = messageField.value;
     if(msg!=""){
@@ -48,6 +51,7 @@ sendButton.addEventListener('click', () => {
     }
 })
 
+/* Chat zone activated */
 messageField.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
@@ -55,6 +59,7 @@ messageField.addEventListener("keyup", function (event) {
     }
 });
 
+/* Scroll chat when filled */
 socket.on('message', (msg, sendername, time) => {
     chatRoom.scrollTop = chatRoom.scrollHeight;
     chatRoom.innerHTML += `<div class="message">
@@ -68,6 +73,14 @@ socket.on('message', (msg, sendername, time) => {
 </div>`
 });
 
+
+/* clear chat */
+clearButton.addEventListener('click', () => {
+    //console.log("clear chat btn clicked");
+    chatRoom.innerHTML=``;
+})
+
+/* Render Attendies list */
 socket.on('attendies',(attendieslist)=>{
     attendiesRoom.innerHTML=`<div>Total Members: ${attendieslist.length}</div>`;
     for(var peer in attendieslist){
@@ -78,22 +91,26 @@ socket.on('attendies',(attendieslist)=>{
     } 
 });
 
-
+/* Game managing */
 gamebutton.addEventListener('click',()=>{
         game.style.display="block";
         bodycont.style.display="none";
 });
+
 backbtngame.addEventListener('click', () => {
         game.style.display="none";
         bodycont.style.display="block";
 })
+
+/* Music managing */
 musicbutton.addEventListener('click',()=>{
     if(musicon){music.style.display="none";musicon=false;}
     else{music.style.display="block";musicon=true;}
 });
 
+/* UI managing on button clicks */
 attendiesButton.addEventListener('click', () => {
-    console.log("attendies btn clicked");
+    //console.log("attendies btn clicked");
     attendiesRoom.style.display="block";
     chatfull.style.display="none";
     if(attendiesvisible){
@@ -123,7 +140,7 @@ attendiesButton.addEventListener('click', () => {
 });
 
 chatButton.addEventListener('click', () => {
-    console.log("chat btn clicked");
+    //console.log("chat btn clicked");
     if(attendiesvisible){
         attendiesvisible=false;
         chatvisible=true;
@@ -144,9 +161,4 @@ chatButton.addEventListener('click', () => {
         document.querySelector('.right-cont').style.display="block";
         document.querySelector('.left-cont').style.width="70%";
     }
-})
-
-clearButton.addEventListener('click', () => {
-    console.log("clear chat btn clicked");
-    chatRoom.innerHTML=``;
 })

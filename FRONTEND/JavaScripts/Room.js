@@ -45,6 +45,10 @@ let peerConnection;
 
 document.querySelector('.roomcode').innerHTML = `${roomid}`
 
+
+
+/* to copy the room code  */
+
 function CopyClassText() {
 
     var textToCopy = document.querySelector('.roomcode');
@@ -73,8 +77,11 @@ function CopyClassText() {
     }, 5000);
 }
 
+
+/* to change the status of the copy */
+
 function openNavCode(){
-    console.log("copy link clicked");
+    //console.log("copy link clicked");
     let copycode = document.querySelector('.copycode-cont');
     if (copycode.style.display === "none") {
         copycode.style.display = "block";
@@ -82,6 +89,8 @@ function openNavCode(){
         copycode.style.display = "none";
       }
 }
+
+/* joining room */
 
 continueButton.addEventListener('click', () => {
     if (nameField.value == '') return;
@@ -91,12 +100,16 @@ continueButton.addEventListener('click', () => {
     socket.emit("join room", roomid, username);
 })
 
+/* to collect name */
+
 nameField.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
         continueButton.click();
     }
 });
+
+/* to set UI neatly */
 
 socket.on('user count', count => {
     if (count > 1) {
@@ -106,6 +119,8 @@ socket.on('user count', count => {
         videoContainer.className = 'video-cont-single';
     }
 })
+
+/* If any error in opening camera or PHONE NOT COMPATIBLE */
 
 function handleGetUserMediaError(e) {
     switch (e.name) {
@@ -124,9 +139,11 @@ function handleGetUserMediaError(e) {
 }
 
 function reportError(e) {
-    console.log(e);
+    //console.log(e);
     return;
 }
+
+/* To start a call */
 
 function startCall() {
 
@@ -149,25 +166,29 @@ function startCall() {
         .catch(handleGetUserMediaError);
 }
 
+/* To handle video offer from a newly joined peer */
+
 function handleVideoOffer(offer, sid, cname, micinf, vidinf) {
 
     cName[sid] = cname;
-    console.log('video offered recevied');
+    //console.log('video offered recevied');
     micInfo[sid] = micinf;
     videoInfo[sid] = vidinf;
     connections[sid] = new RTCPeerConnection(configuration);
 
     connections[sid].onicecandidate = function (event) {
         if (event.candidate) {
-            console.log('icecandidate fired');
+           // console.log('icecandidate fired');
             socket.emit('new icecandidate', event.candidate, sid);
         }
     };
 
+    // add all streams from new peer to html elements
+
     connections[sid].ontrack = function (event) {
 
         if (!document.getElementById(sid)) {
-            console.log('track event fired')
+           // console.log('track event fired')
             let vidCont = document.createElement('div');
             let newvideo = document.createElement('video');
             let name = document.createElement('div');
@@ -209,12 +230,16 @@ function handleVideoOffer(offer, sid, cname, micinf, vidinf) {
         }
     };
 
+    // when person leaves the room -> remove his data
+
     connections[sid].onremovetrack = function (event) {
         if (document.getElementById(sid)) {
             document.getElementById(sid).remove();
-            console.log('removed a track');
+            //console.log('removed a track');
         }
     };
+
+    // when negotiation needed
 
     connections[sid].onnegotiationneeded = function () {
 
@@ -232,6 +257,7 @@ function handleVideoOffer(offer, sid, cname, micinf, vidinf) {
 
     let desc = new RTCSessionDescription(offer);
 
+    /* to check on streams provided from peers */
     connections[sid].setRemoteDescription(desc)
         .then(() => { return navigator.mediaDevices.getUserMedia(mediaConstraints) })
         .then((localStream) => {
@@ -239,7 +265,7 @@ function handleVideoOffer(offer, sid, cname, micinf, vidinf) {
             localStream.getTracks().forEach(track => {
                 connections[sid].addTrack(track, localStream);
                 // roompeers.appendChild(cName[sid]);
-                console.log('added local stream to peer')
+                //console.log('added local stream to peer')
                 if (track.kind === 'audio') {
                     audioTrackSent[sid] = track;
                     if (!audioAllowed)
@@ -267,8 +293,10 @@ function handleVideoOffer(offer, sid, cname, micinf, vidinf) {
 
 }
 
+/* new ice candidates -> internet sessions */
+
 function handleNewIceCandidate(candidate, sid) {
-    console.log('new candidate recieved')
+    //console.log('new candidate recieved')
     var newcandidate = new RTCIceCandidate(candidate);
 
     connections[sid].addIceCandidate(newcandidate)
@@ -276,7 +304,7 @@ function handleNewIceCandidate(candidate, sid) {
 }
 
 function handleVideoAnswer(answer, sid) {
-    console.log('answered the offer')
+    //console.log('answered the offer')
     const ans = new RTCSessionDescription(answer);
     connections[sid].setRemoteDescription(ans);
 }
@@ -287,6 +315,8 @@ socket.on('new icecandidate', handleNewIceCandidate);
 
 socket.on('video-answer', handleVideoAnswer);
 
+
+/* Join room request sent to server */
 
 socket.on('join room', async (conc, cnames, micinfo, videoinfo) => {
     socket.emit('getCanvas');
@@ -300,14 +330,14 @@ socket.on('join room', async (conc, cnames, micinfo, videoinfo) => {
     if (videoinfo)
         videoInfo = videoinfo;
 
-    console.log(cName);
+    //console.log(cName);
     if (conc) {
         await conc.forEach(sid => {
             connections[sid] = new RTCPeerConnection(configuration);
 
             connections[sid].onicecandidate = function (event) {
                 if (event.candidate) {
-                    console.log('icecandidate fired');
+                   // console.log('icecandidate fired');
                     socket.emit('new icecandidate', event.candidate, sid);
                 }
             };
@@ -315,7 +345,7 @@ socket.on('join room', async (conc, cnames, micinfo, videoinfo) => {
             connections[sid].ontrack = function (event) {
 
                 if (!document.getElementById(sid)) {
-                    console.log('track event fired')
+                    //console.log('track event fired')
                     let vidCont = document.createElement('div');
                     let newvideo = document.createElement('video');
                     let name = document.createElement('div');
@@ -380,12 +410,12 @@ socket.on('join room', async (conc, cnames, micinfo, videoinfo) => {
 
         });
 
-        console.log('added all sockets to connections');
+       // console.log('added all sockets to connections');
         startCall();
 
     }
     else {
-        console.log('waiting for someone to join');
+        //console.log('waiting for someone to join');
         navigator.mediaDevices.getUserMedia(mediaConstraints)
             .then(localStream => {
                 myvideo.srcObject = localStream;
@@ -396,6 +426,8 @@ socket.on('join room', async (conc, cnames, micinfo, videoinfo) => {
     }
 })
 
+/* leave room request sent to server */
+
 socket.on('remove peer', sid => {
     if (document.getElementById(sid)) {
         document.getElementById(sid).remove();
@@ -403,6 +435,8 @@ socket.on('remove peer', sid => {
 
     delete connections[sid];
 })
+
+/* Add Video Tracks  */
 
 videoButt.addEventListener('click', () => {
 
@@ -447,6 +481,7 @@ videoButt.addEventListener('click', () => {
     }
 })
 
+/* Add Audio Tracks */
 
 audioButt.addEventListener('click', () => {
 
@@ -488,24 +523,26 @@ audioButt.addEventListener('click', () => {
     }
 })
 
+/* Audio/Video switch form on or off */
+
 socket.on('action', (msg, sid) => {
     if (msg == 'mute') {
-        console.log(cName[sid] + ' muted themself');
+        //console.log(cName[sid] + ' muted themself');
         document.querySelector(`#mute${sid}`).style.visibility = 'visible';
         micInfo[sid] = 'off';
     }
     else if (msg == 'unmute') {
-        console.log(cName[sid] + ' unmuted themself');
+       // console.log(cName[sid] + ' unmuted themself');
         document.querySelector(`#mute${sid}`).style.visibility = 'hidden';
         micInfo[sid] = 'on';
     }
     else if (msg == 'videooff') {
-        console.log(cName[sid]+ 'turned video off');
+        //console.log(cName[sid]+ 'turned video off');
         document.querySelector(`#vidoff${sid}`).style.visibility = 'visible';
         videoInfo[sid] = 'off';
     }
     else if (msg == 'videoon') {
-        console.log(cName[sid] + 'turned video on');
+        //console.log(cName[sid] + 'turned video on');
         document.querySelector(`#vidoff${sid}`).style.visibility = 'hidden';
         videoInfo[sid] = 'on';
     }
@@ -514,19 +551,3 @@ socket.on('action', (msg, sid) => {
 cutCall.addEventListener('click', () => {
     location.href = '/';
 })
-
-
-
-// let gameVisible = false;
-// let drawbattle=document.querySelector('.drawbattle-game');
-// const gameButt = document.querySelector('.game');
-// gameButt.addEventListener('click', () => {
-//     if (gameVisible) {
-//         drawbattle.style.visibility = 'hidden';
-//         gameVisible = false;
-//     }
-//     else {
-//         drawbattle.style.visibility = 'visible';
-//         gameVisible = true;
-//     }
-// })
