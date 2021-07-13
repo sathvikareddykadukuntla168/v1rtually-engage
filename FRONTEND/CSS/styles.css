@@ -565,8 +565,8 @@ body {
 
 @media screen and (min-width: 400px) {
   .container-room .left-cont .video-cont-single {
-    height: 80vh;
-    width: 80vw;
+    height: 80%;
+    width: 80%;
     text-align: center;
     margin: auto;
   }
@@ -574,8 +574,8 @@ body {
 @media screen and (max-width: 400px) {
   .container-room .left-cont .video-cont-single {
     flex-direction:column;
-    height: 80vh;
-    width: 80vw;
+    height: 80%;
+    width: 80%;
     text-align: center;
     margin: auto;
   }
@@ -850,7 +850,7 @@ body {
 }
 
 .container-room .right-cont {
-  width: 30%;
+  width: 28%;
   background-color: #393e46;
   height: 100%;
   position:fixed;

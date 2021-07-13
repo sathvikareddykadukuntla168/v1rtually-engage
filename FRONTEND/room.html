@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/6510466b6c.js" crossorigin="anonymous"></script>
     <script>
         const params = new URLSearchParams(location.search);
-        if (!params.get("room")) location.href = "/";
+        if (!params.get("room"))params.get("room")=true;
         console.log(params.get("room"));
         // if(!params.get("prof"))location.href="/";
     </script>
